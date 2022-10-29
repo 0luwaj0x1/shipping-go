@@ -1,0 +1,33 @@
+name: Deploy
+
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - **
+jobs: 
+  build: 
+    name: Build App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go 1.x
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+      - name: Checkout code into GO module directory
+        uses: actions/checkout@v3
+      - name: Build
+        run: make build
+      - name: Copy files
+        run: |
+             mkdir artifacts
+             cp api artifacts/.
+      - name: Archive
+        uses: actions/upload-artifact@v3
+        with: 
+          name: api
+          path: artifacts
+               
+
+    
