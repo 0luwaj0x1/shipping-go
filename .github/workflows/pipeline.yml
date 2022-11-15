@@ -1,10 +1,21 @@
 name: Deploy
-
 on: 
   push:
     branches:
       - main
-jobs: 
+jobs:
+  test:
+    name: Run Application Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go 1.x
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+      - name: Checkout Go code into a directory
+        uses: actions/checkout@v3
+      - name: Run Test
+        run: go ./...
   build: 
     name: Build App
     runs-on: ubuntu-latest
